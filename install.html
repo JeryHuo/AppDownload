@@ -1,0 +1,86 @@
+<!doctype HTML>
+<html>
+    <head>
+    	<script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="./js/qrcode.min.js"></script>
+        <style>
+            .main {
+                text-align: center; /*让div内部文字居中*/
+                background-color: rgb(255, 255, 255);
+                width: 100%;
+                margin-top: 40px; 
+                position: absolute;
+            }
+
+            .spaceLine {
+                height: 60px;
+            }
+
+            a {
+                font-size: 80px; 
+                padding: 5px;
+                border-radius: 4px;
+                background: rgb(43,206,173);
+                color: white
+            }
+            h2 {
+                font-size: 65px;
+                text-align:center;
+            }
+
+            input {
+                width: 60%; 
+                height:60px; 
+                margin: auto;
+            }
+
+            #qrcode {
+                width:400px;
+                height:400px; 
+                margin: auto;
+            }
+        </style>
+
+        <meta charset="UTF-8">
+        <title>CoinTiger</title>
+    </head>
+    
+    <div class="main"> 
+        <input id="text" type="text" value="itms-services:///?action=download-manifest&url="/> 
+        <div class="spaceLine"></div>      
+        <div id="qrcode"></div>
+        <h2>CoinTiger</h2>
+        <!-- <a style="text-align:center" href="itms-services:///?action=download-manifest&url=">点我下载</a> -->
+        
+        <script type="text/javascript">
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 400,
+				height : 400
+			});
+            
+			function makeCode () {		
+				var inputText = document.getElementById("text");
+	
+				if (!inputText.value) {
+					alert("Input a text");
+					inputText.focus();
+					return;
+				}
+				
+				qrcode.makeCode(inputText.value);
+			}
+			window.onload = makeCode;
+
+			$("#text").
+				on("blur", function () {
+					makeCode();
+				}).
+				on("keydown", function (e) {
+					if (e.keyCode == 13) {
+						makeCode();
+					}
+				});
+			</script>
+    </div>
+    
+</html>
